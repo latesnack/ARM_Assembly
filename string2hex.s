@@ -12,8 +12,8 @@
 
 start
 	    
-           LDR r1, =str		   ; string
-		   LDR r0, =0           ;destination
+                   LDR r1, =str	       ; string
+		   LDR r0, =0          ;destination
 		   LDR r4, =4          ; four
 		   LDR r3, =0          ; sign flag
 
@@ -21,21 +21,21 @@ start
 		   ADD r1, r1, #2	   ;pointer = pointer+2
 		   CMP r2, #"-"		   ;check if current character is -
 		   ADDEQ r1, r1, #1	   ;if so, pointer++
-		   LDREQ r3, =1  		;set sign flag
+		   LDREQ r3, =1            ;set sign flag
 		   CMP r2, #"+"		   ;check if current character is +
-		   ADDEQ r1, r1, #1    ;If so, pointer++      
+		   ADDEQ r1, r1, #1        ;If so, pointer++      
 	   		   		                  
-loop       LDRB r2, [r1]
-                               ; convert ASCII code in r1 to numerical value   CONVERT START 
+loop               LDRB r2, [r1]
+                                           ; convert ASCII code in r1 to numerical value
 		   SUB r2, r2, #48	   ; take 48 from ascii code
 		   CMP r2, #9		   ; check if 0-9
-		   BLE skip			   ; if so, keep the value
-		   SUB r2, r2, #7      ; else, convert to hex from ASCII letter		    CONVERT END
+		   BLE skip	           ; if so, keep the value
+		   SUB r2, r2, #7          ; else, convert to hex from ASCII letter	
 skip       
-           MOV r0, r0, LSL #4  ;Shift the destination register left four times  
+                   MOV r0, r0, LSL #4      ;Shift the destination register left four times  
 		   ORR r0, r2  		   ;OR the number with the destination register
- 		   ADD r1, r1, #1     ;increment pointer to next character		                    
-		   LDRB	 r2, [r1]	  ;Load byte from next character
+ 		   ADD r1, r1, #1          ;increment pointer to next character		                    
+		   LDRB	 r2, [r1]	   ;Load byte from next character
 
 		   CMP r2, #0		  ; check for null character
 		   BNE loop 		  ; if not null, repeat loop
@@ -43,13 +43,17 @@ skip
 		   CMP r3, #1		  ; Check sign flag
 		   MVNEQ r0, r0		  ; if negative, invert the final number...
 		   ADDEQ r0, r0, #1	  ;  ...and add 1
-		   LDR r5, =lable     ; 
+		   LDR r5, =lable     
 		   STR r0, [r5]		  ;  store final number in memory
-stop	B	stop
+		   
+stop	           B	stop
+
 
      AREA TestData, DATA, READWRITE
-str         DCB  "-0xDEADBEEF",0
-lable       SPACE 100     
+     
+str               DCB  "-0xDEADBEEF",0
+lable             SPACE 100  
+
      END
 
 
