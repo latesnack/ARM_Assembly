@@ -14,14 +14,14 @@ start
 	    
            LDR r1, =str		   ; string
 		   LDR r0, =0           ;destination
-		   LDR r6, =4          ; four
-		   LDR r8, =0          ; sign flag
+		   LDR r4, =4          ; four
+		   LDR r3, =0          ; sign flag
 
 		   LDRB r2, [r1]	   ;Load byte from pointer
 		   ADD r1, r1, #2	   ;pointer = pointer+2
 		   CMP r2, #"-"		   ;check if current character is -
 		   ADDEQ r1, r1, #1	   ;if so, pointer++
-		   LDREQ r8, =1  		;set sign flag
+		   LDREQ r3, =1  		;set sign flag
 		   CMP r2, #"+"		   ;check if current character is +
 		   ADDEQ r1, r1, #1    ;If so, pointer++      
 	   		   		                  
@@ -40,7 +40,7 @@ skip
 		   CMP r2, #0		  ; check for null character
 		   BNE loop 		  ; if not null, repeat loop
 		   
-		   CMP r8, #1		  ; Check sign flag
+		   CMP r3, #1		  ; Check sign flag
 		   MVNEQ r0, r0		  ; if negative, invert the final number...
 		   ADDEQ r0, r0, #1	  ;  ...and add 1
 		   LDR r5, =lable     ; 
